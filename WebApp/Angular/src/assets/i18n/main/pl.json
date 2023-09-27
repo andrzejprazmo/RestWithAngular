@@ -1,0 +1,9 @@
+{
+    "top-menu":{
+        "home": "Strona główna",
+        "about": "O programie"
+    },
+    "footer": {
+        "copyright": "Prawa autorskie"
+    }
+}
