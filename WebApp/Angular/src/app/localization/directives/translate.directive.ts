@@ -32,7 +32,7 @@ export class TranslateDirective {
     }
     if (this.translateKey) {
       this.translateValue = this.store.getValue(this.translateKey);
-      this.element.nativeElement.innerText = this.translateValue;
+      this.element.nativeElement.innerHTML = this.translateValue;
     }
   }
 }
