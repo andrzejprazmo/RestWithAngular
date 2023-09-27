@@ -1,7 +1,8 @@
 <div class="container m-3">
   <h1>Hello!</h1>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui accumsan sit amet nulla facilisi morbi tempus iaculis urna. Sem integer vitae justo eget. Id faucibus nisl tincidunt eget. Sed nisi lacus sed viverra tellus in hac habitasse platea. Venenatis urna cursus eget nunc scelerisque viverra. Ac placerat vestibulum lectus mauris ultrices eros in cursus turpis. Gravida rutrum quisque non tellus orci. Viverra adipiscing at in tellus integer feugiat scelerisque varius morbi. Facilisi nullam vehicula ipsum a. Arcu non sodales neque sodales ut etiam sit amet nisl. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Vivamus arcu felis bibendum ut tristique et egestas. Sollicitudin tempor id eu nisl nunc mi ipsum. Purus gravida quis blandit turpis. Vitae elementum curabitur vitae nunc.</p>
-  <p>{{ 'top-menu.about' | translate }}</p>
+  <p>Pipe: <span>{{ 'shared.info' | translate }}</span></p>
+  <p>Directive #1: <span translate>{{ 'shared.info' }}</span></p>
+  <p>Directive #2: <span translate="shared.info"></span></p>
   <app-shared></app-shared>
-  <p translate>{{ 'top-menu.about' }}</p>
 </div>   

@@ -1,9 +1,11 @@
 {
-    "top-menu":{
-        "home": "Home page",
-        "about": "About"
-    },
-    "footer": {
-        "copyright": "Copyright"
+  "header": {
+    "top-menu": {
+      "home": "Home page",
+      "about": "About"
     }
+  },
+  "footer": {
+    "copyright": "Copyright"
+  }
 }
