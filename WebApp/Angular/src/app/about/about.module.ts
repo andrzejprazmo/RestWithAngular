@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './components/about/about.component';
 import { LocalizationModule } from '../localization/localization.module';
-import { LocalizationService } from '../localization/services/localization.service';
+import { LocalizationLoaderConfig, LocalizationService } from '../localization/services/localization.service';
 import { LanguageService } from '../shared/services/language.service';
 import { SharedModule } from '../shared/shared.module';
 
@@ -16,16 +16,19 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     AboutRoutingModule,
     SharedModule,
-    LocalizationModule.forRoot({
-      fileExtensions: 'json',
-      localizationUrl: './assets/i18n'
-    }),
+    LocalizationModule
   ],
   providers: []
 })
-export class AboutModule { 
+export class AboutModule {
+  get loaders(): LocalizationLoaderConfig[] {
+    return [
+      { lang: 'pl', url: './assets/i18n/about/pl.json' },
+      { lang: 'en', url: './assets/i18n/about/en.json' },
+    ]
+  }
   constructor(localization: LocalizationService, language: LanguageService) {
-    localization.load('about', ['pl', 'en']).subscribe(() => {
+    localization.load(this.loaders).subscribe(() => {
       localization.use(language.getLanguage());
     })
   }

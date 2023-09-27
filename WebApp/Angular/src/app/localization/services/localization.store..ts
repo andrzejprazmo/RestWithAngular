@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StorePackage } from '../models/store.models';
+import { LanguageStore, StorePackage } from '../models/store.models';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,65 +7,42 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LocalizationStore {
 
-  store: StorePackage[] = [];
+  list: LanguageStore[] = [];
   currentLang!: string;
   currentLangChange$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   constructor() { }
 
-  addStore(lang: string, module: string, value: any) {
-    let storePackage = this.store.filter(s => s.lang == lang)[0];
+  addStore(lang: string, value: any) {
+    let storePackage = this.list.filter(s => s.lang == lang)[0];
     if (!storePackage) {
       storePackage = {
         lang: lang,
         items: []
       }
-      this.store.push(storePackage);
+      this.list.push(storePackage);
     }
-    let storeItem = storePackage.items.filter(i => i.module == module)[0];
-    if (!storeItem) {
-      storeItem = {
-        module: module,
-        value: value
-      };
-      storePackage.items.push(storeItem);
-    }
+    storePackage.items.push(value);
   }
 
   getValue(key: string): string {
     if (this.currentLang) {
-      const storePackage = this.store.filter(s => s.lang == this.currentLang)[0];
-      if (storePackage) {
+      const items = this.list.filter(s => s.lang == this.currentLang).map(s => s.items)[0];
+      if (items) {
         const keyParts = key.split('.');
-        for (const item of storePackage.items) {
-          let obj = item.value;
+        for (const item of items) {
+          let json = item;
           for (const part of keyParts) {
-            obj = obj[part];
-            if (!obj) {
+            json = json[part];
+            if (!json) {
               break;
             }
           }
-          if (obj) {
-            return obj;
+          if (json) {
+            return json;
           }
         }
       }
     }
     return key;
-  }
-
-  moduleExists(module: string, langs: string[]): boolean {
-    let result = true;
-    for (const lang of langs) {
-      const storePackage = this.store.filter(s => s.lang == lang).map(s => s.items)[0];
-      if (!storePackage) {
-        result = false;
-        break;
-      }
-      if (!storePackage.map(s => s.module).includes(module)) {
-        result = false;
-        break;
-      }
-    }
-    return result;
   }
 }

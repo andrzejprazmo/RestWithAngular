@@ -5,7 +5,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { LocalizationModule } from '../localization/localization.module';
-import { LocalizationService } from '../localization/services/localization.service';
+import { LocalizationLoaderConfig, LocalizationService } from '../localization/services/localization.service';
 import { LanguageService } from '../shared/services/language.service';
 
 
@@ -17,17 +17,20 @@ import { LanguageService } from '../shared/services/language.service';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    LocalizationModule.forRoot({
-      fileExtensions: 'json',
-      localizationUrl: './assets/i18n'
-    }),
+    LocalizationModule
   ],
   providers: [],
 
 })
-export class DashboardModule { 
+export class DashboardModule {
+  get loaders(): LocalizationLoaderConfig[] {
+    return [
+      { lang: 'pl', url: './assets/i18n/dashboard/pl.json' },
+      { lang: 'en', url: './assets/i18n/dashboard/en.json' },
+    ]
+  }
   constructor(localization: LocalizationService, language: LanguageService) {
-    localization.load('dashboard', ['pl', 'en']).subscribe(() => {
+    localization.load(this.loaders).subscribe(() => {
       localization.use(language.getLanguage());
     })
   }

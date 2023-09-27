@@ -7,7 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { CookieModule, CookieService } from 'ngx-cookie';
 import { LocalizationModule } from '../localization/localization.module';
-import { LocalizationService } from '../localization/services/localization.service';
+import { LocalizationLoaderConfig, LocalizationService } from '../localization/services/localization.service';
 import { LanguageService } from '../shared/services/language.service';
 
 @NgModule({
@@ -20,18 +20,22 @@ import { LanguageService } from '../shared/services/language.service';
   imports: [
     CommonModule,
     RouterModule,
-    LocalizationModule.forRoot({
-      fileExtensions: 'json',
-      localizationUrl: './assets/i18n',
-    }),
+    LocalizationModule,
     CookieModule.withOptions(),
   ],
   providers: [],
 
 })
 export class LayoutModule {
+  get loaders(): LocalizationLoaderConfig[] {
+    return [
+      { lang: 'pl', url: './assets/i18n/main/pl.json' },
+      { lang: 'en', url: './assets/i18n/main/en.json' },
+    ]
+  }
+
   constructor(localization: LocalizationService, language: LanguageService) {
-    localization.load('main', ['pl', 'en']).subscribe(() => {
+    localization.load(this.loaders).subscribe(() => {
       localization.use(language.getLanguage());
     })
   }

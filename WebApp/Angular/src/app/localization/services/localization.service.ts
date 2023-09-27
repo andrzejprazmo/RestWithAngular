@@ -1,11 +1,16 @@
 import { Injectable, Optional } from '@angular/core';
-import { Observable, forkJoin, map, of } from 'rxjs';
+import { Observable, Subscription, forkJoin, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalizationStore } from './localization.store.';
 
 export class LocalizationServiceConfig {
   fileExtensions?: string;
   localizationUrl?: string;
+}
+
+export interface LocalizationLoaderConfig {
+  lang: string,
+  url: string,
 }
 
 @Injectable({
@@ -23,22 +28,16 @@ export class LocalizationService {
     this.store.currentLangChange$.next(lang);
   }
 
-  public load(module: string, langs: string[]): Observable<any> {
-    if (!this.store.moduleExists(module, langs)) {
-      if (this.config && module && langs) {
-        const loaders = [];
-        for (const lang of langs) {
-          const url = `${this.config.localizationUrl}/${module}/${lang}.${this.config.fileExtensions}`;
-          loaders.push(this.http.get(url));
-        }
-        return forkJoin(loaders).pipe(map(result => {
-          for (var i = 0; i < result.length; i++) {
-            this.store.addStore(langs[i], module, result[i]);
-          }
-        }));
-      }
+  public load(loaderConfigs: LocalizationLoaderConfig[]): Observable<any> {
+    const loaders = [];
+    for (var i = 0; i < loaderConfigs.length; i++) {
+      loaders.push(this.http.get(loaderConfigs[i].url));
     }
-    return of(null);
+    return forkJoin(loaders).pipe(map(result => {
+      for (var i = 0; i < result.length; i++) {
+        this.store.addStore(loaderConfigs[i].lang, result[i]);
+      }
+    }));
   }
 
   public getValue(key: string): string {
