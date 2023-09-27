@@ -1,22 +1,23 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LocalePipe } from './pipes/locale.pipe';
+import { TranslatePipe } from './pipes/translate.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { LocalizationService, LocalizationServiceConfig } from './services/localization.service';
-import { LocalizationStore } from './services/localization.store.';
+import { TranslateDirective } from './directives/translate.directive';
 
 
 
 @NgModule({
   declarations: [
-    LocalePipe
+    TranslatePipe,
+    TranslateDirective
   ],
   imports: [
     CommonModule,
     HttpClientModule
   ],
   exports: [
-    LocalePipe
+    TranslatePipe, TranslateDirective
   ]
 })
 export class LocalizationModule {

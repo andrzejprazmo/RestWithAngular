@@ -1,6 +1,5 @@
-import { Injectable, Optional, Provider } from '@angular/core';
-import { BehaviorSubject, Observable, forkJoin, map, of } from 'rxjs';
-import { StorePackage } from '../models/store.models';
+import { Injectable, Optional } from '@angular/core';
+import { Observable, forkJoin, map, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LocalizationStore } from './localization.store.';
 
@@ -40,5 +39,9 @@ export class LocalizationService {
       }
     }
     return of(null);
+  }
+
+  public getValue(key: string): string {
+    return this.store.getValue(key);
   }
 }

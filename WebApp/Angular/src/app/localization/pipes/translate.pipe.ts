@@ -5,7 +5,7 @@ import { LocalizationStore } from '../services/localization.store.';
   name: 'translate',
   pure: false
 })
-export class LocalePipe implements PipeTransform {
+export class TranslatePipe implements PipeTransform {
   translateKey!: string;
   translateValue!: string;
 
