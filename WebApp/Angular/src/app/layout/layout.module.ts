@@ -5,9 +5,9 @@ import { RouterModule } from '@angular/router';
 import { TopMenuComponent } from './components/top-menu/top-menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { CookieModule, CookieService } from 'ngx-cookie';
+import { CookieModule } from 'ngx-cookie';
 import { LocalizationModule } from '../localization/localization.module';
-import { LocalizationLoaderConfig, LocalizationService } from '../localization/services/localization.service';
+import { LocalizationService } from '../localization/services/localization.service';
 import { LanguageService } from '../shared/services/language.service';
 
 @NgModule({
@@ -27,15 +27,8 @@ import { LanguageService } from '../shared/services/language.service';
 
 })
 export class LayoutModule {
-  get loaders(): LocalizationLoaderConfig[] {
-    return [
-      { lang: 'pl', url: './assets/i18n/main/pl.json' },
-      { lang: 'en', url: './assets/i18n/main/en.json' },
-    ]
-  }
-
   constructor(localization: LocalizationService, language: LanguageService) {
-    localization.load(this.loaders).subscribe(() => {
+    localization.load('main').subscribe(() => {
       localization.use(language.getLanguage());
     })
   }
