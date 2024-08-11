@@ -15,6 +15,7 @@ namespace WebApp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddCustomEndpoints();
+            // Add healthchecks
             builder.Services.AddHealthChecks();
 
 
