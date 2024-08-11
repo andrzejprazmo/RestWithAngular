@@ -15,6 +15,7 @@ namespace WebApp
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddCustomEndpoints();
+            builder.Services.AddHealthChecks();
 
             var app = builder.Build();
 
@@ -24,7 +25,7 @@ namespace WebApp
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseHealthChecks("/api/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
