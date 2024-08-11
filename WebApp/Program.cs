@@ -17,6 +17,7 @@ namespace WebApp
             builder.Services.AddCustomEndpoints();
             builder.Services.AddHealthChecks();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
