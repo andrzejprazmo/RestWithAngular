@@ -27,6 +27,7 @@ namespace WebApp
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+			// Health check
             app.UseHealthChecks("/api/health");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
